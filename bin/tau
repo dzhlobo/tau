@@ -1,5 +1,13 @@
 #!/usr/bin/env ruby
-require 'tau/version'
 require 'tau/server'
+require 'tau/projecter'
 
 Tau::Server.start if ARGV.first == "server"
+if ARGV.first == "new"
+  project_name = ARGV[1]
+  begin
+    Tau::Projecter.new_project(Dir.pwd, project_name)
+  rescue Exception => e
+    puts e.message
+  end
+end
