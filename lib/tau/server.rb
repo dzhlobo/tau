@@ -6,38 +6,47 @@ require 'sass'
 module Tau
   class Server < Sinatra::Base
     def self.start
-      set :port, 15000
+      set :port, 15000 # TODO: it should be changeable
 
+      # TODO: / route should return list of all files
       get '/' do
-        "hello"
+        "There should be list of all files."
       end
 
       # html
-      get '/:filename.html' do
-        return haml File.read("code/#{params[:filename]}.haml") if File.exist?("code/#{params[:filename]}.haml")
-        send_file "code/#{params[:filename]}.html" if File.exist?("code/#{params[:filename]}.html")
+      get /([\/\.\w-]+)\.html/ do |filename|
+        filename = "code/#{filename}"
+        return haml File.read("#{filename}.haml") if File.exist?("#{filename}.haml")
+        send_file "#{filename}.html" if File.exist?("#{filename}.html")
+        raise Sinatra::NotFound
       end
 
       # javascript
-      get '/js/:filename.js' do
-        return coffee File.read("code/js/#{params[:filename]}.coffee") if File.exist?("code/js/#{params[:filename]}.coffee")
-        send_file "code/js/#{params[:filename]}.js" if File.exist?("code/js/#{params[:filename]}.js")
+      get /js\/([\/\.\w-]+)\.js/ do |filename|
+        filename = "code/js/#{filename}"
+        return coffee File.read("#{filename}.coffee") if File.exist?("#{filename}.coffee")
+        send_file "#{filename}.js" if File.exist?("#{filename}.js")
+        raise Sinatra::NotFound
       end
 
       # css
-      get '/css/:filename.css' do
-        return sass File.read("code/css/#{params[:filename]}.sass") if File.exist?("code/css/#{params[:filename]}.sass")
-        return scss File.read("code/css/#{params[:filename]}.scss") if File.exist?("code/css/#{params[:filename]}.scss")
-        send_file "code/css/#{params[:filename]}.css" if File.exist?("code/css/#{params[:filename]}.css")
+      get /css\/([\/\.\w-]+)\.css/ do |filename|
+        filename = "code/css/#{filename}"
+        return sass File.read("#{filename}.sass") if File.exist?("#{filename}.sass")
+        return scss File.read("#{filename}.scss") if File.exist?("#{filename}.scss")
+        send_file "#{filename}.css" if File.exist?("#{filename}.css")
+        raise Sinatra::NotFound
       end
 
       # images
-      get %r{/img/(.+)} do
-        send_file "code/img/#{params[:captures].first}"
+      get /img\/([\/\.\w-]+)/ do |filename|
+        filename = "code/img/#{filename}"
+        send_file filename if File.exist?(filename)
+        raise Sinatra::NotFound
       end
 
-      get %r{/(.+)} do
-        "unknown request: <b>#{params[:captures].first}</b>"
+      not_found do
+        "No such file or directory"
       end
 
       run!
