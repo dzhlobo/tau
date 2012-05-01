@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
     s.add_development_dependency dependecy
   end
 
-  ['sinatra', 'sass', 'coffee-script'].each do |dependecy|
+  ['sinatra', 'sass', 'coffee-script', 'haml'].each do |dependecy|
     s.add_dependency dependecy
   end
 end
