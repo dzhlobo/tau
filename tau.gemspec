@@ -11,16 +11,17 @@ Gem::Specification.new do |s|
   s.summary     = %q{Tool for web designers want to use haml, sass, coffee-script and others.}
   s.description = %q{tau provide you write web pages on haml, stylesheets on sass and scripts on coffee.}
 
-  s.rubyforge_project = "tau"
-
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
   # specify any dependencies here; for example:
-  # s.add_development_dependency "rspec"
-  s.add_runtime_dependency "sinatra"
-  s.add_runtime_dependency "sass"
-  s.add_runtime_dependency "coffee-script"
+  ['cucumber'].each do |dependecy|
+    s.add_development_dependency dependecy
+  end
+
+  ['sinatra', 'sass', 'coffee-script'].each do |dependecy|
+    s.add_dependency dependecy
+  end
 end
