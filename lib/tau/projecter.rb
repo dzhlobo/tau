@@ -9,10 +9,15 @@ module Tau
 
       Dir.mkdir(project_name)
       Dir.chdir(project_name) do
+        puts("\tcreate\tcode")
         Dir.mkdir('code')
+        puts("\tcreate\tcode/js")
         Dir.mkdir('code/js')
+        puts("\tcreate\tcode/css")
         Dir.mkdir('code/css')
+        puts("\tcreate\tcode/img")
         Dir.mkdir('code/img')
+        puts("\tcreate\ttau.yaml")
         File.new('tau.yaml', 'w')
       end
     end
