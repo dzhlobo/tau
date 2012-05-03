@@ -42,7 +42,8 @@ class CukeGem
     end
 
     def mkgemdir(gem_home)
-      FileUtils::rm_rf(gem_home)
+      # We don't need to removing existing directory in order to 
+      # avoid redownload all dependecies for gem.
       FileUtils::mkdir_p(gem_home)
 
       print 'Installing bundler in test environment... ' if @verbose
