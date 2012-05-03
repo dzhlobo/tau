@@ -53,8 +53,8 @@ http://localhost:15000/page.html or http://localhost:15000/css/style.css or
 http://localhost:15000/js/script.js.
 
 Attend that tau changes files extensions in browser from haml to html, from 
-coffee to js, from sass and scss to css. For example if you have **
-code/js/myscript.coffee** file you can see it in browser by 
+coffee to js, from sass and scss to css. For example if you have 
+**code/js/myscript.coffee** file you can see it in browser by 
 http://localhost:15000/js/myscript.js.
 
 In html or haml file you can include scripts written in coffee and styles 
