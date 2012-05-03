@@ -44,14 +44,7 @@ class CukeGem
     def mkgemdir(gem_home)
       # We don't need to removing existing directory in order to 
       # avoid redownload all dependecies for gem.
-      FileUtils::mkdir_p(gem_home)
-
-      print 'Installing bundler in test environment... ' if @verbose
-      output = `gem install bundler`
-      if $?.exitstatus != 0 then
-        raise "unable to install bundler into #{gem_home}: #{output}"
-      end
-      puts 'done.' if @verbose
+      FileUtils::mkdir_p(gem_home) unless Dir.exist?(gem_home)
     end
 
     def gem_install(gemspec)
