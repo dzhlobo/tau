@@ -4,6 +4,5 @@ Feature: Making new projects
   I want tau make project for me
 
   Scenario: making new project by tau
-    When I run `tau new testproject`
-    Then the exit status should be 0
-    Then there should be right project directory "testproject"
+    When I successfully run `tau new testproject`
+    And there should be right project directory "testproject"
