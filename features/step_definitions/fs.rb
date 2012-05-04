@@ -4,3 +4,7 @@ Then /^there should be right project directory "(.*)"$/ do |project_dir|
   tau_files = ['tau.yaml'].map { |file| "#{project_dir}/#{file}" }
   check_file_presence(tau_files, true)
 end
+
+Given /^I'm on sandbox project directory$/ do
+  @dirs = [SANDBOX_PROJECT_DIR]
+end
