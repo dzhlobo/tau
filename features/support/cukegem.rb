@@ -26,7 +26,7 @@ class CukeGem
     end
 
     def setup_env
-      gem_home = File.join('tmp', 'aruba-gem')
+      gem_home = File.join('tmp', 'sandbox-gem')
       gem_home = File.expand_path(gem_home)
 
       set_env('GEM_HOME', gem_home)
