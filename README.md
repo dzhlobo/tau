@@ -62,8 +62,8 @@ written in sass or scss. For example if you have **code/js/script.coffee**
 script and **code/js/style.sass** spreadsheet you can include it to html by 
 lines:
 ```html
-    <script src='js/script.js' type="text/javascript"></script>
-    <link rel="stylesheet" href="css/style.css" type="text/css" />
+    <script src='js/script.js'></script>
+    <link rel="stylesheet" href="css/style.css">
 ```
 Anytime you change any file you can see updated version in browser. You don't 
 need to compile anything by hand.
