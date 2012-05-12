@@ -4,7 +4,7 @@ module Tau
       Dir.chdir(directory)
 
       raise "This already is the project directory" if project_dir?(directory)
-      raise "Wrong project name" unless project_name =~ /^\w+$/
+      raise "Wrong project name" unless project_name =~ /\A[\wа-я-]+[\wа-я]\.?[\wа-я]+?\z/
       raise "Directory exists" if Dir.exist?(project_name)
 
       Dir.mkdir(project_name)
