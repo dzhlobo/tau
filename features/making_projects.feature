@@ -10,3 +10,7 @@ Feature: Making new projects
   Scenario: making project with dot in project name
   	When I successfully run `tau new .test.project.`
   	Then there should be right project directory ".test.project."
+
+  Scenario: making project with cyrillic name
+    When I successfully run `tau new тест`
+    Then there should be right project directory "тест"
