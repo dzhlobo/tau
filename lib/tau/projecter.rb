@@ -18,13 +18,13 @@ module Tau
         puts("\tcreate\tcode/img")
         Dir.mkdir('code/img')
         puts("\tcreate\ttau.yaml")
-        File.new('tau.yaml', 'w')
+        File.new('tau.yml', 'w')
       end
     end
 
     def self.project_dir?(directory)
       Dir.chdir(directory)
-      Dir.exist?('code') and File.exist?('tau.yaml')
+      Dir.exist?('code') and File.exist?('tau.yml')
     end
   end
 end
