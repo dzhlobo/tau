@@ -2,6 +2,7 @@ require 'thor'
 require 'tau/projecter'
 require 'tau/server'
 require 'tau/version'
+require 'tau/builder'
 
 module Tau
   class Cli < Thor
@@ -19,6 +20,11 @@ module Tau
     desc :server, "Starting server for development"
     def server
       Tau::Server.start
+    end
+
+    desc :build, "Building project"
+    def build
+      Tau::Builder.build
     end
 
     desc :version, "Show tau version"
