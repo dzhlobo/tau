@@ -68,6 +68,20 @@ lines:
 Anytime you change any file you can see updated version in browser. You don't 
 need to compile anything by hand.
 
+### Building project
+
+If you want to compile all files for releasing it in internet you don't need do
+it by hand. `tau build` command compiles all sass, haml and other files and put
+them into **build/** directory. Any files from **img** directory and not a haml, sass 
+or coffee-script files will copied without any changes. For example:
+```
+code/index.haml  ->  build/index.html
+code/js/script.coffee  ->  build/js/script.js
+code/img/logo.png  ->  build/img/logo.png
+code/humans.txt  ->  build/humans.txt
+etc...
+```
+
 License
 -------
 
