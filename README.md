@@ -5,6 +5,12 @@ Tau provides you write code of webpages using modern technologies such as
 haml, sass, coffee-script. You dont't need to compile your code to HTML and
 CSS by hand everytime you something change.
 
+Requirements
+------------
+
+You need ruby version **1.9.3** installed. See [rvm](https://rvm.io/).
+
+
 Installation
 ------------
 
