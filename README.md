@@ -1,4 +1,4 @@
-Tau
+Tau [![Build Status](https://secure.travis-ci.org/Proghat/tau.png?branch=master)](http://travis-ci.org/Proghat/tau)
 ===
 
 Tau provides you write code of webpages using modern technologies such as 
