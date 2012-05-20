@@ -1,5 +1,5 @@
 require 'tau/projecter'
-require 'tau/renderer'
+require 'tau/enginer'
 
 module Tau
   class Builder
@@ -11,22 +11,21 @@ module Tau
         FileUtils.rm_rf('build')
         Dir['code/**/*'].each do |filename|
           if File.directory?(filename)
-            FileUtils.mkdir_p filename.sub('code/', 'build/')
-          elsif not Renderer.need_render? filename
-            FileUtils.cp filename, destination_for(filename)
+            FileUtils.mkdir_p destination_for(filename)
+          elsif Enginer.can_render_from? filename
+            engine = Enginer.engine_for_render_from filename
+            File.write destination_for(filename, engine), engine.render_file(filename)
           else
-            Renderer.render_to_file destination_for(filename), filename
+            FileUtils.cp filename, destination_for(filename)
           end
         end
       end
 
     private
 
-      def destination_for(filename)
-        filename.sub('code/', 'build/').sub(/\.sass$/, '.css')
-                                       .sub(/\.scss$/, '.css')
-                                       .sub(/\.haml$/, '.html')
-                                       .sub(/\.coffee$/, '.js')
+      def destination_for(filename, engine = nil)
+        filename = engine.dst_for filename if engine != nil
+        filename.sub('code/', 'build/')
       end
 
     end

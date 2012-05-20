@@ -1,7 +1,5 @@
 require 'sinatra/base'
-require 'haml'
-require 'coffee-script'
-require 'sass'
+require 'tau/enginer'
 
 module Tau
   class Server < Sinatra::Base
@@ -13,36 +11,20 @@ module Tau
         "There should be list of all files."
       end
 
-      # html
-      get /([\/\.\w-]+)\.html/ do |filename|
-        filename = "code/#{filename}"
-        return haml File.read("#{filename}.haml") if File.exist?("#{filename}.haml")
-        send_file "#{filename}.html" if File.exist?("#{filename}.html")
-        raise Sinatra::NotFound
-      end
+      get /^([[:word:]\.-\/]+)$/ do |filename|
+        filename = "code/#{filename}" # TODO: think about security. User can send "../../" as filename.
 
-      # javascript
-      get /js\/([\/\.\w-]+)\.js/ do |filename|
-        filename = "code/js/#{filename}"
-        return coffee File.read("#{filename}.coffee") if File.exist?("#{filename}.coffee")
-        send_file "#{filename}.js" if File.exist?("#{filename}.js")
-        raise Sinatra::NotFound
-      end
+        "There should be list of all files." if File.directory? filename
 
-      # css
-      get /css\/([\/\.\w-]+)\.css/ do |filename|
-        filename = "code/css/#{filename}"
-        return sass File.read("#{filename}.sass") if File.exist?("#{filename}.sass")
-        return scss File.read("#{filename}.scss") if File.exist?("#{filename}.scss")
-        send_file "#{filename}.css" if File.exist?("#{filename}.css")
-        raise Sinatra::NotFound
-      end
+        send_file filename if File.exist? filename
 
-      # images
-      get /img\/([\/\.\w-]+)/ do |filename|
-        filename = "code/img/#{filename}"
-        send_file filename if File.exist?(filename)
-        raise Sinatra::NotFound
+        # render file by one of engine
+        engine = Enginer.engine_for_render_to filename
+        unless engine == nil
+          engine.render_file engine.source_for(filename)
+        else
+          raise Sinatra::NotFound
+        end
       end
 
       not_found do
