@@ -1,34 +1,32 @@
 require 'sinatra/base'
 require 'tau/enginer'
+require 'tau/server/file_listing'
 
 module Tau
   class Server < Sinatra::Base
+    helpers Tau::ServerHelpers::FileListing
+
     def self.start
       set :port, 15000 # TODO: it should be changeable
 
-      # TODO: / route should return list of all files
-      get '/' do
-        "There should be list of all files."
-      end
+      get /^([[:word:]\.-\/]+)$/ do |path|
+        path = File.expand_path File.join('code', path)
 
-      get /^([[:word:]\.-\/]+)$/ do |filename|
-        filename = "code/#{filename}" # TODO: think about security. User can send "../../" as filename.
+        return show_list_of_files_on path if File.directory? path
 
-        "There should be list of all files." if File.directory? filename
-
-        send_file filename if File.exist? filename
+        send_file path if File.exist? path
 
         # render file by one of engine
-        engine = Enginer.engine_for_render_to filename
-        unless engine == nil
-          engine.render_file engine.source_for(filename)
+        engine = Enginer.engine_for_render_to path
+        if engine != nil
+          engine.render_file engine.source_for(path)
         else
           raise Sinatra::NotFound
         end
       end
 
       not_found do
-        "No such file or directory"
+        show_list_of_files_on File.expand_path('code'), "No such file or directory"
       end
 
       run!

@@ -1,0 +1,20 @@
+!!! 5
+%html
+  %head
+    %title= @title
+    :css
+      #warning-message {
+        text-align: center;
+        font-size: 28px;
+      }
+      #file-list {
+        list-style-type: none;
+      }
+      .file {
+        font-size: 28px;
+      }
+  %body
+    %p#warning-message= @error
+    %ol#file-list
+      - @file_list.each do |file|
+        %li.file= %(<a href="#{file[:url]}">#{file[:filename]}</a>)
