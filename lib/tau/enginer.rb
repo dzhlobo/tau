@@ -28,5 +28,15 @@ module Tau
     def self.engine_for_render_from(filename)
       ENGINES.select {|engine| engine.can_render_from? filename}.first
     end
+
+    def self.dst_for(source)
+      engine = engine_for_render_from source
+      engine != nil ? engine.dst_for(source) : source
+    end
+
+    def self.source_for(dst)
+      engine = engine_for_render_to dst
+      engine != nil ? engine.source_for(dst) : dst_for
+    end
   end
 end
