@@ -8,7 +8,7 @@ module Tau
         @error = error
         @file_list = list_of_files_on dirname
         view = File.read File.join(File.dirname(__FILE__),'views/file_listing.haml')
-        Haml::Engine.new(view).render(self)
+        halt Haml::Engine.new(view).render(self)
       end
 
       def list_of_files_on(dirname)
@@ -16,10 +16,10 @@ module Tau
         file_list << up_dir(dirname) unless upper_dir?(dirname)
         Dir.chdir(dirname) do
           Dir['*'].each do |filename|
-            file_list << { 
+            file_list << {
               filename: filename_for(filename),
               type: File.directory?(filename) ? :dir : :file,
-              url: url_for(filename) 
+              url: url_for(filename)
             }
           end
         end

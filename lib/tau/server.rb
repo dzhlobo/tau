@@ -7,16 +7,17 @@ module Tau
     helpers Tau::ServerHelpers::FileListing
 
     def self.start
-      set :port, 15000 # TODO: it should be changeable
+      set :server, SERVER
+      set :port, Defaults::PORT # TODO: it should be changeable
 
-      get /^([[:word:]\.-\/]+)$/ do |path|
-        path = File.expand_path File.join('code', path)
+      get FILE_PATH_EXP do |path|
+        path = File.expand_path File.join(CODE_DIR, path) # we are currently in project dir
 
-        return show_list_of_files_on path if File.directory? path
+        show_list_of_files_on path if File.directory? path
 
         send_file path if File.exist? path
 
-        # render file by one of engine
+        # render file by one of engine if path isn't a directory or real file
         engine = Enginer.engine_for_render_to path
         if engine != nil
           engine.render_file engine.source_for(path)
@@ -26,7 +27,7 @@ module Tau
       end
 
       not_found do
-        show_list_of_files_on File.expand_path('code'), "No such file or directory"
+        show_list_of_files_on File.expand_path(CODE_DIR), "No such file or directory"
       end
 
       run!
