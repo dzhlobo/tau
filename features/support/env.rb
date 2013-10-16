@@ -19,11 +19,11 @@ server_process = nil
 Dir.chdir('tmp/sandbox') do
   FileUtils::rm_rf('servertesting')
   # Create new project. TODO: think what if tau projecter not works correctly
-  ChildProcess.build('tau new servertesting').start.wait
+  ChildProcess.build('tau', 'new', 'servertesting').start.wait
 
   # Run server on test project directory
   Dir.chdir('servertesting') do
-    server_process = ChildProcess.build('tau server')
+    server_process = ChildProcess.build('tau', 'server')
     server_process.start
   end
 end
