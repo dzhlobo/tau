@@ -29,7 +29,7 @@ It's pretty simple.
 
 2. Create html or haml file on code directory:
 
-    `echo "%h1 Hello <strong>tau</strong>!" > code/hello.haml`
+    `echo '%h1 Hello <strong>tau</strong>!' > code/hello.haml`
 
 3. Start server and go to [http://localhost:15000/hello.html](http://localhost:15000/hello.html):
 
